@@ -12197,6 +12197,10 @@ ssri@^9.0.0, ssri@^9.0.1:
   dependencies:
     minipass "^3.1.1"
 
+"ssz@https://github.com/tuyennhv/ssz.git#tuyen/as-chacha20poly1305-lib":
+  version "1.0.0"
+  resolved "https://github.com/tuyennhv/ssz.git#428d5be0c6ab828d8037cf8efaf95c7b3e2e7f15"
+
 stack-trace@0.0.x:
   version "0.0.10"
   resolved "https://registry.npmjs.org/stack-trace/-/stack-trace-0.0.10.tgz"
