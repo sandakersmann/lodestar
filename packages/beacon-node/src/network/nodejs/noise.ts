@@ -1,7 +1,7 @@
 import {HKDF} from "@stablelib/hkdf";
 import * as x25519 from "@stablelib/x25519";
 import {SHA256} from "@stablelib/sha256";
-import {newInstance, ChaCha20Poly1305} from "ssz/packages/as-chacha20poly1305/lib/src/index";
+import {newInstance, ChaCha20Poly1305} from "ssz-2/packages/as-chacha20poly1305/lib/src/index";
 import {Noise, ICryptoInterface} from "@chainsafe/libp2p-noise";
 import {digest} from "@chainsafe/as-sha256";
 
