@@ -1,8 +1,9 @@
 import {HKDF} from "@stablelib/hkdf";
 import * as x25519 from "@stablelib/x25519";
 import {SHA256} from "@stablelib/sha256";
-import {newInstance, ChaCha20Poly1305} from "ssz-2/packages/as-chacha20poly1305/lib/src/index";
-import {Noise, ICryptoInterface} from "@chainsafe/libp2p-noise";
+import {newInstance, ChaCha20Poly1305} from "ssz-3/packages/as-chacha20poly1305/lib/src/index";
+import type { ConnectionEncrypter } from '@libp2p/interface-connection-encrypter'
+import {ICryptoInterface, noise} from "@chainsafe/libp2p-noise-2";
 import {digest} from "@chainsafe/as-sha256";
 
 type bytes = Uint8Array;
@@ -60,14 +61,12 @@ const lodestarCrypto: ICryptoInterface = {
     return asImpl.seal(k, nonce, plaintext, ad);
   },
 
-  chaCha20Poly1305Decrypt(ciphertext: Uint8Array, nonce: Uint8Array, ad: Uint8Array, k: bytes32): bytes | null {
-    // overwriteSealed = true to avoid a memory allocation on the result
-    return asImpl.open(k, nonce, ciphertext, false, ad);
+  chaCha20Poly1305Decrypt(ciphertext: Uint8Array, nonce: Uint8Array, ad: Uint8Array, k: bytes32, dst?: Uint8Array): bytes | null {
+    return asImpl.open(k, nonce, ciphertext, ad, dst);
   },
 };
 
-export class Eth2Noise extends Noise {
-  constructor() {
-    super(undefined, undefined, lodestarCrypto, undefined);
-  }
+export function createNoise(): ConnectionEncrypter {
+  const factory = noise({crypto: lodestarCrypto});
+  return factory() as ConnectionEncrypter;
 }
